@@ -19,27 +19,41 @@ int add_attendance(int student_id, const char *date, const char *status) {
     }
 }
 
-// Callback function to print attendance records
-int attendance_callback(void *NotUsed, int argc, char **argv, char **colNames) {
-    for (int i = 0; i < argc; i++) {
-        printf("%s: %s\n", colNames[i], argv[i] ? argv[i] : "NULL");
-    }
-    printf("\n");
-    return 0;
-}
-
-// Function to view attendance of a specific student
+// Function to fetch student details and display attendance
 int list_attendance(int student_id) {
     char sql[256];
+    char student_info[256] = {0};
+    char *err_msg = 0;
+
+    // Fetch student details
+    snprintf(sql, sizeof(sql),
+             "SELECT name, email FROM students WHERE id = %d;", student_id);
+
+    int callback(void *data, int argc, char **argv, char **colNames) {
+        snprintf(student_info, sizeof(student_info), "Student: %s (%s)", argv[0], argv[1]);
+        return 0;
+    }
+
+    if (sqlite3_exec(db, sql, callback, 0, &err_msg) != SQLITE_OK) {
+        printf("Error retrieving student details: %s\n", err_msg);
+        sqlite3_free(err_msg);
+        return 1;
+    }
+
+    // Display attendance
     snprintf(sql, sizeof(sql),
              "SELECT date, status FROM attendance WHERE student_id = %d;", student_id);
 
-    printf("\nAttendance Records for Student ID %d:\n", student_id);
+    printf("\n===== Attendance Records =====\n%s\n", student_info);
+    printf("%-15s | %-10s\n", "Date", "Status");
+    printf("-------------------------------\n");
 
-    char *err_msg = 0;
-    int rc = sqlite3_exec(db, sql, attendance_callback, 0, &err_msg);
+    int attendance_callback(void *NotUsed, int argc, char **argv, char **colNames) {
+        printf("%-15s | %-10s\n", argv[0], argv[1]);
+        return 0;
+    }
 
-    if (rc != SQLITE_OK) {
+    if (sqlite3_exec(db, sql, attendance_callback, 0, &err_msg) != SQLITE_OK) {
         printf("Error retrieving attendance: %s\n", err_msg);
         sqlite3_free(err_msg);
         return 1;
