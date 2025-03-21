@@ -6,6 +6,7 @@
 #include "student.h"
 #include "attendance.h"
 #include "grades.h"
+#include "email.h" 
 
 void show_menu() {
     printf("\n===== Student Database Management System =====\n");
@@ -17,7 +18,8 @@ void show_menu() {
     printf("6. View Attendance\n");
     printf("7. Add Grades\n");
     printf("8. View Grades\n");
-    printf("9. Exit\n");
+    printf("9. Send Student Report via Email\n");
+    printf("10. Exit\n");
     printf("Enter your choice: ");
 }
 
@@ -37,7 +39,7 @@ int main() {
             case 1:
                 printf("Enter Student Name: ");
                 fgets(name, sizeof(name), stdin);
-                name[strcspn(name, "\n")] = 0; // Remove newline
+                name[strcspn(name, "\n")] = 0;
 
                 printf("Enter Email: ");
                 fgets(email, sizeof(email), stdin);
@@ -50,7 +52,7 @@ int main() {
                 view_students();
                 break;
 
-            case 3:  // Update student details
+            case 3:
                 printf("Enter Student ID: ");
                 scanf("%d", &student_id);
                 getchar();
@@ -66,7 +68,7 @@ int main() {
                 update_student(student_id, name, email);
                 break;
 
-            case 4:  // Delete student
+            case 4:
                 printf("Enter Student ID: ");
                 scanf("%d", &student_id);
                 delete_student(student_id);
@@ -117,6 +119,12 @@ int main() {
                 break;
 
             case 9:
+                printf("Enter Student ID to Send Email Report: ");
+                scanf("%d", &student_id);
+                send_student_report(student_id);
+                break;
+
+            case 10:
                 printf("Exiting program...\n");
                 exit(0);
 
