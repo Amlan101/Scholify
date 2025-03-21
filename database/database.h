@@ -3,6 +3,8 @@
 
 #include <sqlite3.h>
 
+extern sqlite3 *db;
+
 // Function to initialize the database
 int init_database();
 

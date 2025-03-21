@@ -25,35 +25,12 @@ int init_database() {
         return 1;
     }
 
-    // Create Students Table
-    const char *students_table = 
-        "CREATE TABLE IF NOT EXISTS students ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "name TEXT NOT NULL, "
-        "email TEXT UNIQUE NOT NULL);";
-
-    // Create Attendance Table
-    const char *attendance_table = 
-        "CREATE TABLE IF NOT EXISTS attendance ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "student_id INTEGER, "
-        "date TEXT, "
-        "status TEXT, "
-        "FOREIGN KEY(student_id) REFERENCES students(id));";
-
-    // Create Grades Table
-    const char *grades_table = 
-        "CREATE TABLE IF NOT EXISTS grades ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "student_id INTEGER, "
-        "subject TEXT, "
-        "grade TEXT, "
-        "FOREIGN KEY(student_id) REFERENCES students(id));";
-
-    execute_sql(students_table);
-    execute_sql(attendance_table);
-    execute_sql(grades_table);
+    // Create tables
+    execute_sql("CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT UNIQUE NOT NULL);");
+    execute_sql("CREATE TABLE IF NOT EXISTS attendance (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id INTEGER, date TEXT, status TEXT, FOREIGN KEY(student_id) REFERENCES students(id));");
+    execute_sql("CREATE TABLE IF NOT EXISTS grades (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id INTEGER, subject TEXT, grade TEXT, FOREIGN KEY(student_id) REFERENCES students(id));");
 
     printf("Database initialized successfully!\n");
     return 0;
 }
+
