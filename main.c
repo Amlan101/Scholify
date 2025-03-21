@@ -1,29 +1,26 @@
 #include <stdio.h>
 #include "database.h"
 #include "student.h"
+#include "attendance.h"
 
 int main() {
     // Initialize database
     init_database();
 
-    // Test adding students
-    add_student("Amlan", "amlan@gmail.com");
-    add_student("Tony", "Tony@gmail.com");
+    // Add students
+    add_student("Alice", "alice@example.com");
+    add_student("Bob", "bob@example.com");
 
     // View students
     view_students();
 
-    // Update a student's details
-    update_student(1, "Amlan Prasad Sahoo", "workforamlan@gmail.com");
+    // Mark attendance
+    add_attendance(1, "2025-03-21", "Present");
+    add_attendance(2, "2025-03-21", "Absent");
 
-    // View students after update
-    view_students();
-
-    // Delete a student
-    delete_student(2);
-
-    // View students after deletion
-    view_students();
+    // View attendance records
+    list_attendance(1);
+    list_attendance(2);
 
     return 0;
 }
