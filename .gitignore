@@ -10,3 +10,9 @@ sqlite3.o
 
 # Ignore build artifacts
 Makefile~
+
+# Ignore Visual Studio Code folder
+.vscode/
+
+# Ignore SQLite database
+students.db
