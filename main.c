@@ -2,6 +2,7 @@
 #include "database.h"
 #include "student.h"
 #include "attendance.h"
+#include "grades.h"
 
 int main() {
     // Initialize database
@@ -21,6 +22,15 @@ int main() {
     // View attendance records
     list_attendance(1);
     list_attendance(2);
+
+    // Add grades
+    add_grade(1, "Math", "A");
+    add_grade(1, "Science", "B+");
+    add_grade(2, "Math", "C");
+
+    // View grades
+    list_grades(1);
+    list_grades(2);
 
     return 0;
 }
