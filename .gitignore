@@ -1,0 +1,12 @@
+# Ignore compiled executables and object files
+*.exe
+*.o
+
+# Ignore SQLite binary files if not needed
+sqlite3.dll
+sqlite3.lib
+sqlite3.def
+sqlite3.o
+
+# Ignore build artifacts
+Makefile~
