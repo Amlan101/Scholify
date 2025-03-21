@@ -29,8 +29,6 @@ int init_database() {
     execute_sql("CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT UNIQUE NOT NULL);");
     execute_sql("CREATE TABLE IF NOT EXISTS attendance (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id INTEGER, date TEXT, status TEXT, FOREIGN KEY(student_id) REFERENCES students(id));");
     execute_sql("CREATE TABLE IF NOT EXISTS grades (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id INTEGER, subject TEXT, grade TEXT, FOREIGN KEY(student_id) REFERENCES students(id));");
-
-    printf("Database initialized successfully!\n");
     return 0;
 }
 
