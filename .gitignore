@@ -16,3 +16,6 @@ Makefile~
 
 # Ignore SQLite database
 students.db
+
+# Ignore environment files
+.env
